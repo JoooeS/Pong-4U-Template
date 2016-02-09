@@ -29,7 +29,7 @@ namespace Pong
         #region Global Values
 
 
-        
+
 
 
 
@@ -56,12 +56,12 @@ namespace Pong
         const int PADDLE_LENGTH = 40;
         const int PADDLE_WIDTH = 10;
         const int PADDLE_EDGE = 20;  // buffer distance between screen edge and paddle
-        int paddleSpeed = 4;
+        int paddleSpeed = 8;
 
 
         //constants used to set size and speed of ball 
         const int BALL_SIZE = 10;
-        int ballSpeed = 4;
+        int ballSpeed = 8;
 
 
         //player scores
@@ -74,7 +74,7 @@ namespace Pong
 
 
         //game winning score
-        int gameWinScore = 10;
+        int gameWinScore = 4;
 
 
         //brush for paint method
@@ -85,7 +85,7 @@ namespace Pong
         public Form1()
         {
             InitializeComponent();
-            SetParameters();        
+            SetParameters();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -123,7 +123,7 @@ namespace Pong
                         startLabel.Text = "... Okay. Bye :(";
                         this.Refresh();
                         Thread.Sleep(1000);
-                        
+
 
                         Close();
                     }
@@ -138,7 +138,7 @@ namespace Pong
                     break;
             }
         }
-        
+
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -179,7 +179,7 @@ namespace Pong
 
             startLabel.Visible = false;
             Refresh();
-            
+
             //countdown to start of game
             for (int x = 3; x > 0; x--)
             {
@@ -213,11 +213,11 @@ namespace Pong
 
                 ballHitCount = 0;
 
-                
+
 
             }
 
-            paddleSpeed = ballSpeed = 4;
+            paddleSpeed = ballSpeed = 8;
             ballX = (this.Width / 2) - (BALL_SIZE / 2);
             ballY = (this.Height / 2) - (BALL_SIZE / 2);
 
@@ -241,13 +241,13 @@ namespace Pong
             if (ballMoveRight == true)
             {
                 ballX += ballSpeed;
-                
+
             }
             else
             {
                 ballX -= ballSpeed;
             }
-            
+
 
             if (ballMoveDown == true)
             {
@@ -259,7 +259,7 @@ namespace Pong
             }
 
             #endregion
-             
+
 
             #region update paddle positions
 
@@ -292,12 +292,12 @@ namespace Pong
                 player.Play();
             }
 
-            if (ballY + BALL_SIZE > this.Height ) // if ball hits top line
+            if (ballY + BALL_SIZE > this.Height) // if ball hits top line
             {
                 ballMoveDown = false;
                 player.Play();
             }
-            
+
 
             #endregion
 
@@ -313,52 +313,52 @@ namespace Pong
                 ballHitCount++;
 
 
-                //if (this.Height > 200)
-                //{
-                //    this.Height -= 5 * ballHitCount;
-                //    this.Width += 4 * ballHitCount;
-                //}
-                /*#region Screen Manipulation
-
-                if (ballHitCount >= 1) // EDIT
+                if (this.Height > 200)
                 {
-                    Random randNum = new Random();
-                    Random rand2Num = new Random();
-                    Random rand3Num = new Random();
-
-
-                    int genie = randNum.Next(20, 81);
-                    int subOrAdd = rand2Num.Next(1, 101);
-
-                    if (subOrAdd % 2 == 0)
-                    {
-                        int widthOrHeight = rand3Num.Next(1, 101);
-
-                        if (widthOrHeight == 0)
-                        {
-                            this.Height -= genie;
-                        }
-                        else
-                        {
-                            this.Width -= genie;
-                        }
-                    }
-                    else
-                    {
-                        int widthOrHeight = randNum.Next(1, 101);
-
-                        if (widthOrHeight == 0)
-                        {
-                            this.Height += genie;
-                        }
-                        else
-                        {
-                            this.Width += genie;
-                        }
-                    }
+                    this.Height -= 5 * ballHitCount;
+                    //    this.Width += 4 * ballHitCount;
                 }
+                #region Screen Manipulation
 
-                #endregion*/
+                //if (ballHitCount >= 1) // EDIT
+                //{
+                //    Random randNum = new Random();
+                //    Random rand2Num = new Random();
+                //    Random rand3Num = new Random();
+
+
+                //    int genie = randNum.Next(20, 81);
+                //    int subOrAdd = rand2Num.Next(1, 101);
+
+                //    if (subOrAdd % 2 == 0)
+                //    {
+                //        int widthOrHeight = rand3Num.Next(1, 101);
+
+                //        if (widthOrHeight == 0)
+                //        {
+                //            this.Height -= genie;
+                //        }
+                //        else
+                //        {
+                //            this.Width -= genie;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        int widthOrHeight = randNum.Next(1, 101);
+
+                //        if (widthOrHeight == 0)
+                //        {
+                //            this.Height += genie;
+                //        }
+                //        else
+                //        {
+                //            this.Width += genie;
+                //        }
+                //    }
+                //}
+
+                #endregion
 
             }
             else if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_LENGTH && ballX + BALL_SIZE > this.Width - PADDLE_EDGE - PADDLE_WIDTH / 2) // right paddle collision
@@ -369,53 +369,53 @@ namespace Pong
                 paddleSpeed += 2;
                 ballHitCount++;
 
-                //if (this.Height > 200)
-                //{
-                //    this.Height -= 5 * ballHitCount;
+                if (this.Height > 200)
+
+                    this.Height -= 5 * ballHitCount;
                 //    this.Width += 4 * ballHitCount;
-                //}
-                /*#region Screen Manipulation
-
-                if (ballHitCount >= 1) // EDIT
-                {
-                    Random randNum = new Random();
-                    Random rand2Num = new Random();
-                    Random rand3Num = new Random();
-
-
-                    int genie = randNum.Next(20, 81);
-                    int subOrAdd = rand2Num.Next(1, 101);
-
-                    if (subOrAdd % 2 == 0)
-                    {
-                        int widthOrHeight = rand3Num.Next(1, 101);
-
-                        if (widthOrHeight == 0)
-                        {
-                            this.Height -= genie;
-                        }
-                        else
-                        {
-                            this.Width -= genie;
-                        }
-                    }
-                    else
-                    {
-                        int widthOrHeight = randNum.Next(1, 101);
-
-                        if (widthOrHeight == 0)
-                        {
-                            this.Height += genie;
-                        }
-                        else
-                        {
-                            this.Width += genie;
-                        }
-                    }
-                }
-
-                #endregion*/
             }
+            #region Screen Manipulation
+
+            //if (ballHitCount >= 1) // EDIT
+            //{
+            //    Random randNum = new Random();
+            //    Random rand2Num = new Random();
+            //    Random rand3Num = new Random();
+
+
+            //    int genie = randNum.Next(20, 81);
+            //    int subOrAdd = rand2Num.Next(1, 101);
+
+            //    if (subOrAdd % 2 == 0)
+            //    {
+            //        int widthOrHeight = rand3Num.Next(1, 101);
+
+            //        if (widthOrHeight == 0)
+            //        {
+            //            this.Height -= genie;
+            //        }
+            //        else
+            //        {
+            //            this.Width -= genie;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        int widthOrHeight = randNum.Next(1, 101);
+
+            //        if (widthOrHeight == 0)
+            //        {
+            //            this.Height += genie;
+            //        }
+            //        else
+            //        {
+            //            this.Width += genie;
+            //        }
+            //    }
+            //}
+
+            #endregion*/
+
 
             #endregion
 
@@ -465,7 +465,7 @@ namespace Pong
 
             Refresh();
         }
-        
+
 
         /// <summary>
         /// Displays a message for the winner when the game is over and allows the user to either select
