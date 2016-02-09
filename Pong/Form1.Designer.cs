@@ -47,11 +47,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.startLabel.BackColor = System.Drawing.Color.Transparent;
-            this.startLabel.Font = new System.Drawing.Font("Segoe WP Black", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startLabel.ForeColor = System.Drawing.Color.Black;
             this.startLabel.Location = new System.Drawing.Point(105, 114);
             this.startLabel.Name = "startLabel";
-            this.startLabel.Size = new System.Drawing.Size(410, 93);
+            this.startLabel.Size = new System.Drawing.Size(634, 243);
             this.startLabel.TabIndex = 0;
             this.startLabel.Text = "Press Space To Start!";
             this.startLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -61,7 +61,7 @@
             this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closeButton.ForeColor = System.Drawing.Color.White;
-            this.closeButton.Location = new System.Drawing.Point(595, -1);
+            this.closeButton.Location = new System.Drawing.Point(819, -1);
             this.closeButton.Margin = new System.Windows.Forms.Padding(0);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(21, 24);
@@ -75,11 +75,11 @@
             // 
             this.player1Label.AutoSize = true;
             this.player1Label.BackColor = System.Drawing.Color.Gray;
-            this.player1Label.Font = new System.Drawing.Font("Segoe WP Black", 12F);
+            this.player1Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.player1Label.ForeColor = System.Drawing.Color.White;
             this.player1Label.Location = new System.Drawing.Point(28, 2);
             this.player1Label.Name = "player1Label";
-            this.player1Label.Size = new System.Drawing.Size(90, 21);
+            this.player1Label.Size = new System.Drawing.Size(84, 20);
             this.player1Label.TabIndex = 2;
             this.player1Label.Text = "George:  0";
             // 
@@ -88,11 +88,11 @@
             this.player2Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.player2Label.AutoSize = true;
             this.player2Label.BackColor = System.Drawing.Color.Gray;
-            this.player2Label.Font = new System.Drawing.Font("Segoe WP Black", 12F);
+            this.player2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.player2Label.ForeColor = System.Drawing.Color.White;
-            this.player2Label.Location = new System.Drawing.Point(430, 2);
+            this.player2Label.Location = new System.Drawing.Point(654, 2);
             this.player2Label.Name = "player2Label";
-            this.player2Label.Size = new System.Drawing.Size(78, 21);
+            this.player2Label.Size = new System.Drawing.Size(71, 20);
             this.player2Label.TabIndex = 3;
             this.player2Label.Text = "Geoff:  0";
             // 
@@ -103,7 +103,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::Pong.Properties.Resources.Pyroland;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(616, 450);
+            this.ClientSize = new System.Drawing.Size(840, 600);
             this.Controls.Add(this.player2Label);
             this.Controls.Add(this.player1Label);
             this.Controls.Add(this.closeButton);

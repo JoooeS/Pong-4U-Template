@@ -1,7 +1,10 @@
 ﻿/*
  * Description:     A basic PONG simulator
- * Author:           
- * Date:            
+ * Author:          Joe S     
+ * Date:            February 08 16'
+ *
+ * TODO - Random Movement? Manipulation of screen? Multiple balls? Power-ups? ---- ROUND Spherical paddles?
+ * 9:20 PM Feb 08 16' Note: Need to work on screen manipulation
  */
 
 #region libraries
@@ -23,40 +26,56 @@ namespace Pong
 {
     public partial class Form1 : Form
     {
-        #region global values
+        #region Global Values
+
+
+        
+
+
 
         //paddle position variables
         int paddle1Y, paddle2Y;
 
+        // LIFE
+        int ballHitCount;
+
         //ball position variables
         int ballX, ballY;
 
+
         // check to see if a new game can be started
         Boolean newGameOk = true;
+
 
         //ball directions
         Boolean ballMoveRight = false;
         Boolean ballMoveDown = false;
 
+
         //constants used to set size and speed of paddles 
         const int PADDLE_LENGTH = 40;
         const int PADDLE_WIDTH = 10;
         const int PADDLE_EDGE = 20;  // buffer distance between screen edge and paddle
-        const int PADDLE_SPEED = 8;
+        int paddleSpeed = 4;
+
 
         //constants used to set size and speed of ball 
         const int BALL_SIZE = 10;
-        const int BALL_SPEED = 8;
+        int ballSpeed = 4;
+
 
         //player scores
         int player1Score = 0;
         int player2Score = 0;
 
+
         //determines whether a key is being pressed or not
         Boolean aKeyDown, zKeyDown, jKeyDown, mKeyDown;
 
+
         //game winning score
-        int gameWinScore = 2;
+        int gameWinScore = 10;
+
 
         //brush for paint method
         SolidBrush drawBrush = new SolidBrush(Color.White);
@@ -69,10 +88,9 @@ namespace Pong
             SetParameters();        
         }
 
-        // -- YOU DO NOT NEED TO MAKE CHANGES TO THIS METHOD
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            //check to see if a key is pressed and set is KeyDown value to true if it has
+            //Check to see if a key is pressed and set its KeyDown value to true if it has
             switch (e.KeyCode)
             {
                 case Keys.A:
@@ -88,19 +106,30 @@ namespace Pong
                     mKeyDown = true;
                     break;
                 case Keys.Y:
-                    if (newGameOk)
+                    if (newGameOk == true)
                     {
                         GameStart();
                     }
                     break;
                 case Keys.N:
-                    if (newGameOk)
+                    if (newGameOk == true)
                     {
+                        startLabel.Text = "Aw. You don't like me?";
+                        this.Refresh();
+                        Thread.Sleep(1000);
+                        startLabel.Text = "... Okay. Bye";
+                        this.Refresh();
+                        Thread.Sleep(1000);
+                        startLabel.Text = "... Okay. Bye :(";
+                        this.Refresh();
+                        Thread.Sleep(1000);
+                        
+
                         Close();
                     }
                     break;
                 case Keys.Space:
-                    if (newGameOk)
+                    if (newGameOk == true)
                     {
                         GameStart();
                     }
@@ -110,7 +139,7 @@ namespace Pong
             }
         }
         
-        // -- YOU DO NOT NEED TO MAKE CHANGES TO THIS METHOD
+
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             //check to see if a key has been released and set its KeyDown value to false if it has
@@ -132,6 +161,7 @@ namespace Pong
                     break;
             }
         }
+
 
         /// <summary>
         /// Sets up the game objects in their start position, resets the scores, displays a 
@@ -159,8 +189,9 @@ namespace Pong
             }
 
             gameUpdateLoop.Start();
-            newGameOk = true;
+            newGameOk = false;
         }
+
 
         /// <summary>
         /// sets the ball and paddle positions for game start
@@ -170,8 +201,8 @@ namespace Pong
             if (newGameOk)
             {
                 // sets location of score labels to the middle of the screen
-                player1Label.Location = new Point(this.Width / 2 - player1Label.Size.Width - 10, player1Label.Location.Y);
-                player2Label.Location = new Point(this.Width / 2 + 10, player2Label.Location.Y);
+                player1Label.Location = new Point(10, 10);
+                player2Label.Location = new Point(this.Width - player2Label.Width - 50, 10);
 
                 //set label, score variables, and ball position
                 player1Score = player2Score = 0;
@@ -180,14 +211,19 @@ namespace Pong
 
                 paddle1Y = paddle2Y = this.Height / 2 - PADDLE_LENGTH / 2;
 
+                ballHitCount = 0;
+
+                
+
             }
 
-
+            paddleSpeed = ballSpeed = 4;
             ballX = (this.Width / 2) - (BALL_SIZE / 2);
             ballY = (this.Height / 2) - (BALL_SIZE / 2);
 
 
         }
+
 
         /// <summary>
         /// This method is the game engine loop that updates the position of all elements
@@ -204,46 +240,49 @@ namespace Pong
 
             if (ballMoveRight == true)
             {
-                ballX += BALL_SPEED;
+                ballX += ballSpeed;
+                
             }
             else
             {
-                ballX -= BALL_SPEED;
+                ballX -= ballSpeed;
             }
             
 
             if (ballMoveDown == true)
             {
-                ballY += BALL_SPEED;
+                ballY += ballSpeed;
             }
             else
             {
-                ballY -= BALL_SPEED;
+                ballY -= ballSpeed;
             }
 
             #endregion
+             
 
             #region update paddle positions
 
             if (aKeyDown == true && paddle1Y > 0)
             {
-                paddle1Y -= PADDLE_SPEED;
+                paddle1Y -= paddleSpeed;
             }
             if (zKeyDown == true && paddle1Y + PADDLE_LENGTH < this.Height)
             {
-                paddle1Y += PADDLE_SPEED;
+                paddle1Y += paddleSpeed;
             }
 
             if (jKeyDown == true && paddle2Y > 0)
             {
-                paddle2Y -= PADDLE_SPEED;
+                paddle2Y -= paddleSpeed;
             }
             if (mKeyDown == true && paddle2Y + PADDLE_LENGTH < this.Height)
             {
-                paddle2Y += PADDLE_SPEED;
+                paddle2Y += paddleSpeed;
             }
 
             #endregion
+
 
             #region ball collision with top and bottom lines
 
@@ -258,9 +297,10 @@ namespace Pong
                 ballMoveDown = false;
                 player.Play();
             }
-            // TODO In an else if statement use ballY, this.Height, and BALL_SIZE to check for collision with bottom line
+            
 
             #endregion
+
 
             #region ball collision with paddles
 
@@ -268,29 +308,132 @@ namespace Pong
             {
                 player.Play();
                 ballMoveRight = true;
+                ballSpeed += 2;
+                paddleSpeed += 2;
+                ballHitCount++;
+
+
+                //if (this.Height > 200)
+                //{
+                //    this.Height -= 5 * ballHitCount;
+                //    this.Width += 4 * ballHitCount;
+                //}
+                /*#region Screen Manipulation
+
+                if (ballHitCount >= 1) // EDIT
+                {
+                    Random randNum = new Random();
+                    Random rand2Num = new Random();
+                    Random rand3Num = new Random();
+
+
+                    int genie = randNum.Next(20, 81);
+                    int subOrAdd = rand2Num.Next(1, 101);
+
+                    if (subOrAdd % 2 == 0)
+                    {
+                        int widthOrHeight = rand3Num.Next(1, 101);
+
+                        if (widthOrHeight == 0)
+                        {
+                            this.Height -= genie;
+                        }
+                        else
+                        {
+                            this.Width -= genie;
+                        }
+                    }
+                    else
+                    {
+                        int widthOrHeight = randNum.Next(1, 101);
+
+                        if (widthOrHeight == 0)
+                        {
+                            this.Height += genie;
+                        }
+                        else
+                        {
+                            this.Width += genie;
+                        }
+                    }
+                }
+
+                #endregion*/
+
             }
             else if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_LENGTH && ballX + BALL_SIZE > this.Width - PADDLE_EDGE - PADDLE_WIDTH / 2) // right paddle collision
             {
                 player.Play();
                 ballMoveRight = false;
+                ballSpeed += 2;
+                paddleSpeed += 2;
+                ballHitCount++;
+
+                //if (this.Height > 200)
+                //{
+                //    this.Height -= 5 * ballHitCount;
+                //    this.Width += 4 * ballHitCount;
+                //}
+                /*#region Screen Manipulation
+
+                if (ballHitCount >= 1) // EDIT
+                {
+                    Random randNum = new Random();
+                    Random rand2Num = new Random();
+                    Random rand3Num = new Random();
+
+
+                    int genie = randNum.Next(20, 81);
+                    int subOrAdd = rand2Num.Next(1, 101);
+
+                    if (subOrAdd % 2 == 0)
+                    {
+                        int widthOrHeight = rand3Num.Next(1, 101);
+
+                        if (widthOrHeight == 0)
+                        {
+                            this.Height -= genie;
+                        }
+                        else
+                        {
+                            this.Width -= genie;
+                        }
+                    }
+                    else
+                    {
+                        int widthOrHeight = randNum.Next(1, 101);
+
+                        if (widthOrHeight == 0)
+                        {
+                            this.Height += genie;
+                        }
+                        else
+                        {
+                            this.Width += genie;
+                        }
+                    }
+                }
+
+                #endregion*/
             }
 
             #endregion
+
 
             #region ball collision with side walls (point scored)
 
             player = new SoundPlayer(Properties.Resources.score);
 
-            if (ballX < 0)  // TODO ball hits left wall logic
+            if (ballX < 0)
             {
                 player.Play();
                 player2Score++;
-                player2Label.Text = Convert.ToString(player2Score);
+                player2Label.Text = "Player 2: " + Convert.ToString(player2Score);
                 this.Refresh();
 
                 if (player2Score == gameWinScore)
                 {
-                    
+                    GameOver("Player 1");
                 }
                 else
                 {
@@ -299,16 +442,16 @@ namespace Pong
 
             }
 
-            if (ballX + BALL_SIZE > this.Width)  // TODO ball hits left wall logic
+            if (ballX + BALL_SIZE > this.Width)
             {
                 player.Play();
                 player1Score++;
-                player1Label.Text = Convert.ToString(player1Score);
+                player1Label.Text = "Player 1: " + Convert.ToString(player1Score);
                 this.Refresh();
 
                 if (player1Score == gameWinScore)
                 {
-
+                    GameOver("Player 2");
                 }
                 else
                 {
@@ -316,35 +459,45 @@ namespace Pong
                 }
 
             }
-            // TODO same as above but this time check for collision with the right wall
 
             #endregion
 
-            //refresh the screen, which causes the Form1_Paint method to run
-            this.Refresh();
+
+            Refresh();
         }
         
+
         /// <summary>
         /// Displays a message for the winner when the game is over and allows the user to either select
         /// to play again or end the program
         /// </summary>
         /// <param name="winner">The player name to be shown as the winner</param>
-        private void GameOver(string winner)
+        private void GameOver(string loser)
         {
             newGameOk = true;
 
-            // TODO create game over logic
-            // --- stop the gameUpdateLoop
-            // --- show a message on the startLabel to indicate a winner
-            // --- pause for two seconds 
-            // --- use the startLabel to ask the user if they want to play again
+            gameUpdateLoop.Stop();
+            startLabel.Text = "The loser is " + loser + "!!";
+            startLabel.Visible = true;
+            Refresh();
+            Thread.Sleep(2000);
+            startLabel.Text = "Do you want to play again? Y or N";
 
         }
+
 
         private void closeButton_Click(object sender, EventArgs e)
         {
+            startLabel.Text = "Aw. You don't like me?";
+            Thread.Sleep(500);
+            startLabel.Text = "... Okay. Bye";
+            Thread.Sleep(500);
+            startLabel.Text = "... Okay. Bye :(";
+            Thread.Sleep(500);
+
             Close();
         }
+
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
